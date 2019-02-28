@@ -27,7 +27,7 @@ func NewInnerServer(conf *ServerConf, ks storage.OvoStorage, in *processor.InCom
 	return &InnerServer{keystorage: ks, incmdproc: in, config: conf, partitioner: partitioner, outcmdproc: out}
 }
 
-// Start listening commands.
+// Do starts listening commands.
 func (srv *InnerServer) Do() {
 	rpc.Register(srv)
 	rpc.HandleHTTP()
@@ -192,7 +192,7 @@ func (srv *InnerServer) updateAllClusterNodes() {
 	}
 }
 
-// Get the topology
+// GetTopology gets the topology
 func (srv *InnerServer) GetTopology(name *string, reply *cluster.ClusterTopology) (err error) {
 	log.Printf("Node %s asked topology\r\n", *name)
 	reply.Nodes = srv.config.Topology.GetNodes()

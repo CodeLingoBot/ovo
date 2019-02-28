@@ -15,7 +15,7 @@ func Protect(g func()) {
 	g() // possible runtime-error
 }
 
-// Check if a slice of int contains a value
+// Contains checks if a slice of int contains a value
 func Contains(s []int, e int) bool {
 	if s == nil {
 		return false
@@ -28,7 +28,7 @@ func Contains(s []int, e int) bool {
 	return false
 }
 
-// Check if a slice of int contains a value
+// ContainsString checks if a slice of int contains a value
 func ContainsString(s []string, e string) bool {
 	if s == nil {
 		return false
@@ -41,7 +41,7 @@ func ContainsString(s []string, e string) bool {
 	return false
 }
 
-// Remove all occurences of the element in the slice
+// RemoveElement removes all occurences of the element in the slice
 func RemoveElement(s []string, element string) []string {
 	list := make([]string, 0)
 	for _, e := range s {

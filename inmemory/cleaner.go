@@ -59,7 +59,7 @@ func (cl *Cleaner) Stop() {
 	cl.doneChan <- true
 }
 
-// Add an element to the cleaner
+// AddElement adds an element to the cleaner
 func (cl *Cleaner) AddElement(element *storage.MetaDataObj) {
 	duration := element.CreationDate.Add(time.Duration(element.TTL) * time.Second).Sub(time.Now())
 	if duration < 0 {
@@ -76,7 +76,7 @@ func (cl *Cleaner) AddElement(element *storage.MetaDataObj) {
 	}
 }
 
-// Remove the expired elements
+// RemoveExpiredElements removes the expired elements
 func (cl *Cleaner) RemoveExpiredElements() {
 	if list, ok := cl.expirables[cl.step]; ok {
 		for _, obj := range list {

@@ -48,12 +48,12 @@ func SetCurrentNode(node *ClusterTopologyNode, ct *ClusterTopology) {
 	ct.AddNode(currentNode)
 }
 
-// Get the current node
+// GetCurrentNode gets the current node
 func GetCurrentNode() *ClusterTopologyNode {
 	return currentNode
 }
 
-// Get the active twin nodes
+// GetTwins gets the active twin nodes
 func (ct *ClusterTopology) GetTwins(names []string) (nodes []*ClusterTopologyNode) {
 	nodes = make([]*ClusterTopologyNode, 0)
 	mux.RLock()
@@ -68,7 +68,7 @@ func (ct *ClusterTopology) GetTwins(names []string) (nodes []*ClusterTopologyNod
 	return nodes
 }
 
-// Get the all active nodes
+// GetNodes gets the all active nodes
 func (ct *ClusterTopology) GetNodes() (nodes []*ClusterTopologyNode) {
 	nodes = make([]*ClusterTopologyNode, 0)
 	mux.RLock()
@@ -81,7 +81,7 @@ func (ct *ClusterTopology) GetNodes() (nodes []*ClusterTopologyNode) {
 	return nodes
 }
 
-// Get the all inactive nodes
+// GetInactiveNodes gets the all inactive nodes
 func (ct *ClusterTopology) GetInactiveNodes() (nodes []*ClusterTopologyNode) {
 	nodes = make([]*ClusterTopologyNode, 0)
 	mux.RLock()
@@ -94,7 +94,7 @@ func (ct *ClusterTopology) GetInactiveNodes() (nodes []*ClusterTopologyNode) {
 	return nodes
 }
 
-// Get the all active cluster nodes except current
+// GetClusterNodes gets the all active cluster nodes except current
 func (ct *ClusterTopology) GetClusterNodes() (nodes []*ClusterTopologyNode) {
 	nodes = make([]*ClusterTopologyNode, 0)
 	mux.RLock()
@@ -107,7 +107,7 @@ func (ct *ClusterTopology) GetClusterNodes() (nodes []*ClusterTopologyNode) {
 	return nodes
 }
 
-// Get the relative nodes
+// GetRelatives gets the relative nodes
 func (ct *ClusterTopology) GetRelatives() (nodes []*ClusterTopologyNode) {
 	nodemap := make(map[string]*ClusterTopologyNode, 0)
 	nodes = make([]*ClusterTopologyNode, 0)
@@ -126,7 +126,7 @@ func (ct *ClusterTopology) GetRelatives() (nodes []*ClusterTopologyNode) {
 	return nodes
 }
 
-// Get the node that contains the hashcode
+// GetNodeByHash gets the node that contains the hashcode
 func (ct *ClusterTopology) GetNodeByHash(hash int) (node *ClusterTopologyNode) {
 	mux.RLock()
 	defer mux.RUnlock()
@@ -139,7 +139,7 @@ func (ct *ClusterTopology) GetNodeByHash(hash int) (node *ClusterTopologyNode) {
 	return nil
 }
 
-// Get node by name
+// GetNodeByName gets node by name
 func (ct *ClusterTopology) GetNodeByName(name string) (node *ClusterTopologyNode, ind int) {
 	mux.RLock()
 	defer mux.RUnlock()
@@ -156,13 +156,13 @@ func (ct *ClusterTopology) getNodeByName(name string) (node *ClusterTopologyNode
 	return nil, 0
 }
 
-// Add or update a node in the topology ordering the topology by node's startdate and rebuilding the hahscode
+// AddNode adds or update a node in the topology ordering the topology by node's startdate and rebuilding the hahscode
 func (ct *ClusterTopology) AddNode(node *ClusterTopologyNode) {
 	ct.addNode(node)
 	ct.buildHashcode()
 }
 
-// Add or update a twin in the topology ordering the topology by node's startdate and rebuilding the hahscode
+// AddTwin adds or update a twin in the topology ordering the topology by node's startdate and rebuilding the hahscode
 func (ct *ClusterTopology) AddTwin(node *ClusterTopologyNode) {
 	ct.addNode(node)
 	ct.buildHashcode()
@@ -170,7 +170,7 @@ func (ct *ClusterTopology) AddTwin(node *ClusterTopologyNode) {
 	currentNode.UpdateDate = time.Now()
 }
 
-// Add or update a stepbrother in the topology ordering the topology by node's startdate and rebuilding the hahscode
+// AddStepbrother adds or update a stepbrother in the topology ordering the topology by node's startdate and rebuilding the hahscode
 func (ct *ClusterTopology) AddStepbrother(node *ClusterTopologyNode) {
 	ct.addNode(node)
 	ct.buildHashcode()
@@ -178,7 +178,7 @@ func (ct *ClusterTopology) AddStepbrother(node *ClusterTopologyNode) {
 	currentNode.UpdateDate = time.Now()
 }
 
-// Add or update a twin and stepbrother in the topology ordering the topology by node's startdate and rebuilding the hahscode
+// AddTwinAndStepbrother adds or update a twin and stepbrother in the topology ordering the topology by node's startdate and rebuilding the hahscode
 func (ct *ClusterTopology) AddTwinAndStepbrother(node *ClusterTopologyNode) {
 	ct.addNode(node)
 	ct.buildHashcode()
@@ -187,7 +187,7 @@ func (ct *ClusterTopology) AddTwinAndStepbrother(node *ClusterTopologyNode) {
 	currentNode.UpdateDate = time.Now()
 }
 
-// Remove a node from the topology
+// RemoveNode removes a node from the topology
 func (ct *ClusterTopology) RemoveNode(nodeName string) {
 	if res := ct.removeNode(nodeName); res {
 		log.Printf("Node %s REMOVED.\r\n", nodeName)

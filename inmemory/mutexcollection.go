@@ -25,7 +25,7 @@ func NewMutexCollection() *InMemoryMutexCollection {
 	return coll
 }
 
-// Add an item to the collection.
+// Put adds an item to the collection.
 func (coll *InMemoryMutexCollection) Put(obj *storage.MetaDataObj) {
 	coll.Lock()
 	defer coll.Unlock()
@@ -43,14 +43,14 @@ func (coll *InMemoryMutexCollection) Get(key string) (*storage.MetaDataObj, bool
 	}
 }
 
-// Remove the item of the collection
+// Delete removes the item of the collection
 func (coll *InMemoryMutexCollection) Delete(key string) {
 	coll.Lock()
 	defer coll.Unlock()
 	delete(coll.storage, key)
 }
 
-// Remove the item of the collection
+// DeleteExpired removes the item of the collection
 func (coll *InMemoryMutexCollection) DeleteExpired(key string) {
 	coll.Lock()
 	defer coll.Unlock()
@@ -61,7 +61,7 @@ func (coll *InMemoryMutexCollection) DeleteExpired(key string) {
 	}
 }
 
-// Get an item and remove it from the collection in a single operation.
+// GetAndRemove gets an item and remove it from the collection in a single operation.
 func (coll *InMemoryMutexCollection) GetAndRemove(key string) (*storage.MetaDataObj, bool) {
 	coll.Lock()
 	defer coll.Unlock()
@@ -215,7 +215,7 @@ func (coll *InMemoryMutexCollection) SetCounter(c *storage.MetaDataCounter) *sto
 	}
 }
 
-// Get a counter by key.
+// GetCounter gets a counter by key.
 func (coll *InMemoryMutexCollection) GetCounter(key string) (*storage.MetaDataCounter, bool) {
 	coll.RLock()
 	defer coll.RUnlock()
@@ -226,7 +226,7 @@ func (coll *InMemoryMutexCollection) GetCounter(key string) (*storage.MetaDataCo
 	}
 }
 
-// Remove the item of the collection
+// DeleteCounter removes the item of the collection
 func (coll *InMemoryMutexCollection) DeleteCounter(key string) {
 	coll.Lock()
 	defer coll.Unlock()

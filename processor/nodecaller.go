@@ -54,7 +54,7 @@ func (nc *NodeCaller) getCaller(name string) (*rpc.Client, bool) {
 	}
 }
 
-// Execute remote operation on destination server
+// ExecuteOperation executes remote operation on destination server
 func (nc *NodeCaller) ExecuteOperation(obj *storage.MetaDataUpdObj, destination *cluster.OvoNode, operation string) error {
 	defer func() {
 		// executes normally even if there is a panic
@@ -260,7 +260,7 @@ func (nc *NodeCaller) Ping(currentNode string, destination *cluster.OvoNode) err
 	return err
 }
 
-// Remove a client by name
+// RemoveClient removes a client by name
 func (nc *NodeCaller) RemoveClient(name string) {
 	delete(nc.clients, name)
 }

@@ -24,7 +24,7 @@ func NewInMemoryStorage() *InMemoryStorage {
 	return ks
 }
 
-// Add an item to the storage.
+// Put adds an item to the storage.
 func (ks *InMemoryStorage) Put(obj *storage.MetaDataObj) error {
 	if obj != nil {
 		if len(obj.Key) == 0 {
@@ -53,17 +53,17 @@ func (ks *InMemoryStorage) Get(key string) (*storage.MetaDataObj, error) {
 	return nil, errors.New("Not found.")
 }
 
-// Remove the item of the storage
+// Delete removes the item of the storage
 func (ks *InMemoryStorage) Delete(key string) {
 	ks.collection.Delete(key)
 }
 
-// Remove the item of the storage
+// DeleteExpired removes the item of the storage
 func (ks *InMemoryStorage) DeleteExpired(key string) {
 	ks.collection.DeleteExpired(key)
 }
 
-// Get an item and remove it from the storage in a single operation.
+// GetAndRemove gets an item and remove it from the storage in a single operation.
 func (ks *InMemoryStorage) GetAndRemove(key string) (*storage.MetaDataObj, error) {
 	if obj, ok := ks.collection.GetAndRemove(key); ok {
 		if obj.IsExpired() {
@@ -169,7 +169,7 @@ func (ks *InMemoryStorage) SetCounter(c *storage.MetaDataCounter) *storage.MetaD
 	return ks.collection.SetCounter(c)
 }
 
-// Get a counter by key.
+// GetCounter gets a counter by key.
 func (ks *InMemoryStorage) GetCounter(key string) (*storage.MetaDataCounter, error) {
 	if obj, ok := ks.collection.GetCounter(key); ok {
 		if obj.IsExpired() {
@@ -180,7 +180,7 @@ func (ks *InMemoryStorage) GetCounter(key string) (*storage.MetaDataCounter, err
 	return nil, errors.New("Not found.")
 }
 
-// Remove the item of the collection
+// DeleteCounter removes the item of the collection
 func (ks *InMemoryStorage) DeleteCounter(key string) {
 	ks.collection.DeleteCounter(key)
 }

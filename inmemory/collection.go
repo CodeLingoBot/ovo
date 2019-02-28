@@ -31,7 +31,7 @@ func NewCollection() *InMemoryCollection {
 	return coll
 }
 
-// Add an item to the collection.
+// Put adds an item to the collection.
 func (coll *InMemoryCollection) Put(obj *storage.MetaDataObj) {
 	coll.commands <- func() { coll.storage[obj.Key] = obj }
 }
@@ -55,12 +55,12 @@ func (coll *InMemoryCollection) Get(key string) (*storage.MetaDataObj, bool) {
 	}
 }
 
-// Remove the item of the collection
+// Delete removes the item of the collection
 func (coll *InMemoryCollection) Delete(key string) {
 	coll.commands <- func() { delete(coll.storage, key) }
 }
 
-// Remove the item of the collection
+// DeleteExpired removes the item of the collection
 func (coll *InMemoryCollection) DeleteExpired(key string) {
 	coll.commands <- func() {
 		if ret, ok := coll.storage[key]; ok {
@@ -71,7 +71,7 @@ func (coll *InMemoryCollection) DeleteExpired(key string) {
 	}
 }
 
-// Get an item and remove it from the collection in a single operation.
+// GetAndRemove gets an item and remove it from the collection in a single operation.
 func (coll *InMemoryCollection) GetAndRemove(key string) (*storage.MetaDataObj, bool) {
 	retChan := make(chan *storage.MetaDataObj)
 	defer close(retChan)
@@ -259,7 +259,7 @@ func (coll *InMemoryCollection) SetCounter(c *storage.MetaDataCounter) *storage.
 	return result
 }
 
-// Get a counter by key.
+// GetCounter gets a counter by key.
 func (coll *InMemoryCollection) GetCounter(key string) (*storage.MetaDataCounter, bool) {
 	retChan := make(chan *storage.MetaDataCounter)
 	defer close(retChan)
@@ -278,7 +278,7 @@ func (coll *InMemoryCollection) GetCounter(key string) (*storage.MetaDataCounter
 	}
 }
 
-// Remove the item of the collection
+// DeleteCounter removes the item of the collection
 func (coll *InMemoryCollection) DeleteCounter(key string) {
 	coll.commands <- func() { delete(coll.counters, key) }
 }
